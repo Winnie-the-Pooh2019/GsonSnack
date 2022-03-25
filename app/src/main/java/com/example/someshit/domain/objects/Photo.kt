@@ -14,10 +14,6 @@ data class Photo(
     val isfriend: Int,
     val isfamily: Int
 ) {
-//    override fun toString(): String {
-//        return "Photo(id='$id', owner='$owner', secret='$secret', server='$server', farm=$farm, title='$title', ispublic=$ispublic, isfriend=$isfriend, isfamily=$isfamily)"
-//    }
-
     fun generateDownloadLink(source: String): String {
         var string = source
 
