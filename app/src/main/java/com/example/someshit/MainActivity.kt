@@ -62,7 +62,6 @@ class MainActivity : AppCompatActivity() {
             Log.i("CONNECTION INFO", "CONNECTION ESTABLISHED: ${connection.url}")
 
             val gson = Gson()
-//        val listPhotosType = object : TypeToken<List<Photo>>() {}.type
 
             val wrapper = gson.fromJson(
                 connection.inputStream.bufferedReader().readText(),
