@@ -1,9 +1,10 @@
 package com.example.someshit
 
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.someshit.adapter.CatAdapter
 import com.example.someshit.domain.objects.Photo
@@ -27,10 +28,11 @@ class MainActivity : AppCompatActivity() {
             val photo = downloadJsonAsync(getString(R.string.link)).photos.photo
 
             findViewById<RecyclerView>(R.id.recycler_view).apply {
-                layoutManager = LinearLayoutManager(context)
+                layoutManager = GridLayoutManager(context, 2)
                 setHasFixedSize(true)
 
-                adapter = CatAdapter(photo)
+                adapter = CatAdapter(photo,
+                getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
             }
         }
     }
@@ -42,10 +44,6 @@ class MainActivity : AppCompatActivity() {
         val connection = withContext(Dispatchers.IO) {
             URL(link).openConnection()
         } as HttpURLConnection
-
-        println("CONNECTION ESTABLISHED")
-
-        Log.i("CONNECTION INFO", "CONNECTION ESTABLISHED: ${connection.url}")
 
         val wrapper = Gson().fromJson(
             connection.inputStream.bufferedReader().readText(),

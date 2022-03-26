@@ -1,5 +1,7 @@
 package com.example.someshit.adapter
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
@@ -15,7 +17,8 @@ import timber.log.Timber
 import java.net.HttpURLConnection
 import java.net.URL
 
-class CatAdapter(private val list: List<Photo>) : RecyclerView.Adapter<CatHolder>() {
+class CatAdapter(private val list: List<Photo>, private val clipboardManager: ClipboardManager)
+    : RecyclerView.Adapter<CatHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatHolder = CatHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.recycler_item, parent, false))
 
@@ -23,13 +26,13 @@ class CatAdapter(private val list: List<Photo>) : RecyclerView.Adapter<CatHolder
         val photo = list[position]
 
         CoroutineScope(Dispatchers.Main).launch {
-            holder.imageView.setImageBitmap(
-                downloadImage(photo.generateDownloadLink(
-                    holder.imageView.context.getString(R.string.download_link)
-                )))
-
-            holder.textView.text = photo.generateDownloadLink(
+            val link = photo.generateDownloadLink(
                 holder.imageView.context.getString(R.string.download_link))
+
+            holder.imageView.setImageBitmap(downloadImage(link))
+            holder.imageView.setOnClickListener {
+                link.copyToClipboard()
+            }
         }
     }
 
@@ -37,15 +40,29 @@ class CatAdapter(private val list: List<Photo>) : RecyclerView.Adapter<CatHolder
 
     private suspend fun downloadImage(downloadLink: String): Bitmap {
         val bitmap = withContext(Dispatchers.Default) {
-            val connection = withContext(Dispatchers.IO) {
-                URL(downloadLink).openConnection()
-            } as HttpURLConnection
+            var connection: HttpURLConnection? = null
+            val result: Bitmap
 
-            BitmapFactory.decodeStream(connection.inputStream)
+            try {
+                connection = withContext(Dispatchers.IO) {
+                    URL(downloadLink).openConnection()
+                } as HttpURLConnection
+                result = BitmapFactory.decodeStream(connection.inputStream)
+            } finally {
+                connection?.disconnect()
+            }
+
+            return@withContext result
         }
 
-        Timber.tag("IMAGE DOWNLOADED").i("IMAGE DOWNLOADING COMPLETED")
-
         return bitmap
+    }
+
+    private fun String.copyToClipboard() {
+        clipboardManager.setPrimaryClip(
+            ClipData.newPlainText("text", this)
+        )
+
+        Timber.i(this)
     }
 }
