@@ -39,7 +39,7 @@ class CatAdapter(private val list: List<Photo>, private val clipboardManager: Cl
     override fun getItemCount(): Int = list.size
 
     private suspend fun downloadImage(downloadLink: String): Bitmap {
-        val bitmap = withContext(Dispatchers.Default) {
+        val bitmap = withContext(Dispatchers.IO) {
             var connection: HttpURLConnection? = null
             val result: Bitmap
 
@@ -49,7 +49,8 @@ class CatAdapter(private val list: List<Photo>, private val clipboardManager: Cl
                 } as HttpURLConnection
                 result = BitmapFactory.decodeStream(connection.inputStream)
             } finally {
-                connection?.disconnect()
+                connection!!.inputStream.close()
+                connection.disconnect()
             }
 
             return@withContext result
