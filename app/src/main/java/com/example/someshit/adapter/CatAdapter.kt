@@ -2,12 +2,14 @@ package com.example.someshit.adapter
 
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.example.someshit.PicViewer
 import com.example.someshit.R
 import com.example.someshit.domain.objects.Photo
 import kotlinx.coroutines.CoroutineScope
@@ -18,23 +20,30 @@ import timber.log.Timber
 import java.net.HttpURLConnection
 import java.net.URL
 
-class CatAdapter(private val list: List<Photo>, private val clipboardManager: ClipboardManager)
-    : RecyclerView.Adapter<CatHolder>() {
+class CatAdapter(private val list: List<Photo>, private val clipboardManager: ClipboardManager) :
+    RecyclerView.Adapter<CatHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatHolder = CatHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.recycler_item, parent, false))
+        LayoutInflater.from(parent.context).inflate(R.layout.recycler_item, parent, false)
+    )
 
     override fun onBindViewHolder(holder: CatHolder, position: Int) {
         val photo = list[position]
 
         CoroutineScope(Dispatchers.Main).launch {
             val link = photo.generateDownloadLink(
-                holder.imageView.context.getString(R.string.download_link))
+                holder.imageView.context.getString(R.string.download_link)
+            )
 
             holder.imageView.setImageBitmap(downloadImage(link))
             holder.imageView.layoutParams = LinearLayout.LayoutParams(
-                holder.imageView.width, holder.imageView.width)
+                holder.imageView.width, holder.imageView.width
+            )
+
             holder.imageView.setOnClickListener {
-                link.copyToClipboard()
+                val intent = Intent(holder.imageView.context, PicViewer::class.java)
+                intent.putExtra(holder.imageView.context.getString(R.string.link_transfer_code), link)
+
+                holder.imageView.context.startActivity(intent)
             }
         }
     }
