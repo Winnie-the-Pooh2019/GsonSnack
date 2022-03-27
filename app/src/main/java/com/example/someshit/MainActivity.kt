@@ -31,8 +31,10 @@ class MainActivity : AppCompatActivity() {
                 layoutManager = GridLayoutManager(context, 2)
                 setHasFixedSize(true)
 
-                adapter = CatAdapter(photo,
-                getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
+                adapter = CatAdapter(
+                    photo,
+                    getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                )
             }
         }
     }
@@ -48,7 +50,14 @@ class MainActivity : AppCompatActivity() {
         val wrapper = Gson().fromJson(
             connection.inputStream.bufferedReader().readText(),
             Wrapper::class.java
-        )
+        ).apply {
+            photos.photo.forEachIndexed { index, photo ->
+                if (index % 5 == 0) {
+//                    println(photo.toString())
+                    Timber.d(photo.toString())
+                }
+            }
+        }
 
         wrapper
     }

@@ -30,4 +30,8 @@ data class Photo(
             it.name == propertyName } as KProperty1<Any, *>
         return  property.get(this).toString()
     }
+
+    override fun toString(): String {
+        return "Photo(id='$id', owner='$owner', secret='$secret', server='$server', farm=$farm, title='$title', ispublic=$ispublic, isfriend=$isfriend, isfamily=$isfamily)"
+    }
 }

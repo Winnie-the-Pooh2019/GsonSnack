@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.someshit.R
 import com.example.someshit.domain.objects.Photo
@@ -30,6 +31,8 @@ class CatAdapter(private val list: List<Photo>, private val clipboardManager: Cl
                 holder.imageView.context.getString(R.string.download_link))
 
             holder.imageView.setImageBitmap(downloadImage(link))
+            holder.imageView.layoutParams = LinearLayout.LayoutParams(
+                holder.imageView.width, holder.imageView.width)
             holder.imageView.setOnClickListener {
                 link.copyToClipboard()
             }
