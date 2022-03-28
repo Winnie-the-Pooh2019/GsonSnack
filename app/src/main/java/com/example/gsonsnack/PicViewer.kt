@@ -36,7 +36,7 @@ class PicViewer : AppCompatActivity() {
         val drawableId: Int = R.drawable.baseline_favorite_24
         R.string.toast_added_to_fav
         item.setIcon(drawableId)
-        
+
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra(getString(R.string.link_transfer_code), link)
         setResult(RESULT_OK, intent)
