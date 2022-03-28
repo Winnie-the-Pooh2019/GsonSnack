@@ -1,4 +1,4 @@
-package com.example.someshit.domain.objects
+package com.example.gsonsnack.domain.objects
 
 data class Page(
     val page: Int,

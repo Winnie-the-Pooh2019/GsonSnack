@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GsonMenu</string>
+    <string name="app_name">GsonSnack</string>
     <string name="desc_activity_name">Details</string>
     <string name="link">https://api.flickr.com/services/rest/?method=flickr.photos.search&amp;api_key=ff49fcd4d4a08aa6aafb6ea3de826464&amp;tags=cat&amp;format=json&amp;nojsoncallback=1</string>
     <string name="download_link">https://farm${farm}.staticflickr.com/${server}/${id}_${secret}_z.jpg</string>

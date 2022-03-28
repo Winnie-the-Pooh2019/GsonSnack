@@ -1,4 +1,4 @@
-package com.example.someshit
+package com.example.gsonsnack
 
 import org.junit.Test
 

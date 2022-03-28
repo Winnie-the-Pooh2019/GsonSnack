@@ -1,4 +1,4 @@
-package com.example.someshit
+package com.example.gsonsnack
 
 import android.os.Bundle
 import android.view.Menu

@@ -1,4 +1,4 @@
-package com.example.someshit.adapter
+package com.example.gsonsnack.adapter
 
 import android.content.Intent
 import android.graphics.Bitmap
@@ -7,9 +7,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.example.someshit.PicViewer
-import com.example.someshit.R
-import com.example.someshit.domain.objects.Photo
+import com.example.gsonsnack.PicViewer
+import com.example.gsonsnack.R
+import com.example.gsonsnack.domain.objects.Photo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

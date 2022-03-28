@@ -1,4 +1,4 @@
-package com.example.someshit.domain.objects
+package com.example.gsonsnack.domain.objects
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

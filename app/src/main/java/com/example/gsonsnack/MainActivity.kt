@@ -1,12 +1,12 @@
-package com.example.someshit
+package com.example.gsonsnack
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.someshit.adapter.CatAdapter
-import com.example.someshit.domain.objects.Photo
-import com.example.someshit.domain.objects.Wrapper
+import com.example.gsonsnack.adapter.CatAdapter
+import com.example.gsonsnack.domain.objects.Photo
+import com.example.gsonsnack.domain.objects.Wrapper
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
