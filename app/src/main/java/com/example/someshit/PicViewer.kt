@@ -6,7 +6,6 @@ import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import com.bumptech.glide.Glide
 
 class PicViewer : AppCompatActivity() {
@@ -20,7 +19,8 @@ class PicViewer : AppCompatActivity() {
 
             Glide.with(this)
                 .load(link)
-                .placeholder(R.mipmap.herewego)
+//                .placeholder(R.mipmap.herewego)
+                .fallback(R.mipmap.herewego)
                 .into(it)
 
 //            it.setOnClickListener {
