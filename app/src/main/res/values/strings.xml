@@ -4,6 +4,7 @@
     <string name="link">https://api.flickr.com/services/rest/?method=flickr.photos.search&amp;api_key=ff49fcd4d4a08aa6aafb6ea3de826464&amp;tags=cat&amp;format=json&amp;nojsoncallback=1</string>
     <string name="download_link">https://farm${farm}.staticflickr.com/${server}/${id}_${secret}_z.jpg</string>
     <string name="link_transfer_code">picCode</string>
-    <string name="toast_text">Добавлено в избранное</string>
+    <string name="toast_added_to_fav">Добавлено в избранное</string>
+    <string name="toast_removed_from_fav">Удалено из избранного</string>
     <string name="scaled_image">scaled image</string>
 </resources>

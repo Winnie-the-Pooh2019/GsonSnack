@@ -6,6 +6,7 @@ import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import com.bumptech.glide.Glide
 
 class PicViewer : AppCompatActivity() {
@@ -19,15 +20,8 @@ class PicViewer : AppCompatActivity() {
 
             Glide.with(this)
                 .load(link)
-//                .placeholder(R.mipmap.herewego)
                 .fallback(R.mipmap.herewego)
                 .into(it)
-
-//            it.setOnClickListener {
-//                Toast
-//                    .makeText(this, getText(R.string.toast_text), Toast.LENGTH_SHORT)
-//                    .show()
-//            }
         }
     }
 
@@ -37,8 +31,18 @@ class PicViewer : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        item.setIcon(R.drawable.baseline_favorite_24)
-        Toast.makeText(this, getString(R.string.toast_text), Toast.LENGTH_LONG).show()
+        val drawableId: Int
+        val toastText: Int
+
+        if (item.icon == AppCompatResources.getDrawable(this, R.drawable.baseline_favorite_border_24)) {
+            drawableId = R.drawable.baseline_favorite_24
+            toastText = R.string.toast_added_to_fav
+        } else {
+            drawableId = R.drawable.baseline_favorite_border_24
+            toastText = R.string.toast_removed_from_fav
+        }
+        item.setIcon(drawableId)
+        Toast.makeText(this, toastText, Toast.LENGTH_LONG).show()
 
         return true
     }
