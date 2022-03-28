@@ -10,10 +10,11 @@
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
-            android:supportsRtl="true">
+            android:supportsRtl="true" android:fullBackupContent="true">
 <!--            android:theme="@style/Theme.SomeShit.PicViewer">-->
         <activity
                 android:theme="@style/Theme.SomeShit.PicViewer"
+                android:label="@string/desc_activity_name"
                 android:name=".PicViewer"
                 android:exported="true"/>
         <activity

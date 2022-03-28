@@ -37,6 +37,7 @@ class PicViewer : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        item.setIcon(R.drawable.baseline_favorite_24)
         Toast.makeText(this, getString(R.string.toast_text), Toast.LENGTH_LONG).show()
 
         return true
