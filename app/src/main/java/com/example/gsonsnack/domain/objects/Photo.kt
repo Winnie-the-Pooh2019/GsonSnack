@@ -1,6 +1,5 @@
 package com.example.gsonsnack.domain.objects
 
-import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
@@ -16,9 +15,6 @@ data class Photo(
     @SerializedName("isfriend") val isFriend: Int,
     @SerializedName("isfamily") val isFamily: Int
 ) {
-    @Expose
-    var isFavorite: Boolean = false
-
     fun generateDownloadLink(source: String): String {
         var string = source
 

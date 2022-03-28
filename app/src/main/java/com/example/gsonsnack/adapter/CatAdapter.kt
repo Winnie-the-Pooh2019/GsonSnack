@@ -1,13 +1,12 @@
 package com.example.gsonsnack.adapter
 
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.example.gsonsnack.PicViewer
+import com.example.gsonsnack.MainActivity
 import com.example.gsonsnack.R
 import com.example.gsonsnack.domain.objects.Photo
 import kotlinx.coroutines.CoroutineScope
@@ -17,8 +16,9 @@ import kotlinx.coroutines.withContext
 import java.net.HttpURLConnection
 import java.net.URL
 
-class CatAdapter(private val list: List<Photo>) :
+class CatAdapter(private val main: MainActivity, private val list: List<Photo>) :
     RecyclerView.Adapter<CatHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatHolder = CatHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.recycler_item, parent, false)
     )
@@ -37,11 +37,7 @@ class CatAdapter(private val list: List<Photo>) :
             )
 
             holder.imageView.setOnClickListener {
-                val intent = Intent(holder.imageView.context, PicViewer::class.java)
-                intent.putExtra(holder.imageView.context.getString(R.string.link_transfer_code), link)
-                intent.putExtra(holder.imageView.context.getString(R.string.bool_key), list[position].isFavorite)
-
-                holder.imageView.context.startActivity(intent)
+                main.picViewContract.launch(link)
             }
         }
     }
