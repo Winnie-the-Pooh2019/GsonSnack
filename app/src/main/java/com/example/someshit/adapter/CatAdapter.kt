@@ -1,7 +1,5 @@
 package com.example.someshit.adapter
 
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -16,11 +14,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 import java.net.HttpURLConnection
 import java.net.URL
 
-class CatAdapter(private val list: List<Photo>, private val clipboardManager: ClipboardManager) :
+class CatAdapter(private val list: List<Photo>) :
     RecyclerView.Adapter<CatHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatHolder = CatHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.recycler_item, parent, false)
@@ -42,6 +39,7 @@ class CatAdapter(private val list: List<Photo>, private val clipboardManager: Cl
             holder.imageView.setOnClickListener {
                 val intent = Intent(holder.imageView.context, PicViewer::class.java)
                 intent.putExtra(holder.imageView.context.getString(R.string.link_transfer_code), link)
+                intent.putExtra(holder.imageView.context.getString(R.string.bool_key), list[position].isFavorite)
 
                 holder.imageView.context.startActivity(intent)
             }
@@ -69,13 +67,5 @@ class CatAdapter(private val list: List<Photo>, private val clipboardManager: Cl
         }
 
         return bitmap
-    }
-
-    private fun String.copyToClipboard() {
-        clipboardManager.setPrimaryClip(
-            ClipData.newPlainText("text", this)
-        )
-
-        Timber.i(this)
     }
 }

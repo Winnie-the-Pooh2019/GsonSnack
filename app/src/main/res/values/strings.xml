@@ -6,5 +6,6 @@
     <string name="link_transfer_code">picCode</string>
     <string name="toast_added_to_fav">Добавлено в избранное</string>
     <string name="toast_removed_from_fav">Удалено из избранного</string>
+    <string name="bool_key">boolCode</string>
     <string name="scaled_image">scaled image</string>
 </resources>

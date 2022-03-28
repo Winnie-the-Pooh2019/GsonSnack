@@ -1,5 +1,7 @@
 package com.example.someshit.domain.objects
 
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
 
@@ -10,10 +12,13 @@ data class Photo(
     val server: String,
     val farm: Int,
     val title: String,
-    val ispublic: Int,
-    val isfriend: Int,
-    val isfamily: Int
+    @SerializedName("ispublic") val isPublic: Int,
+    @SerializedName("isfriend") val isFriend: Int,
+    @SerializedName("isfamily") val isFamily: Int
 ) {
+    @Expose
+    var isFavorite: Boolean = false
+
     fun generateDownloadLink(source: String): String {
         var string = source
 
@@ -32,6 +37,6 @@ data class Photo(
     }
 
     override fun toString(): String {
-        return "Photo(id='$id', owner='$owner', secret='$secret', server='$server', farm=$farm, title='$title', ispublic=$ispublic, isfriend=$isfriend, isfamily=$isfamily)"
+        return "Photo(id='$id', owner='$owner', secret='$secret', server='$server', farm=$farm, title='$title', ispublic=$isPublic, isfriend=$isFriend, isfamily=$isFamily)"
     }
 }

@@ -1,7 +1,5 @@
 package com.example.someshit
 
-import android.content.ClipboardManager
-import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -32,8 +30,7 @@ class MainActivity : AppCompatActivity() {
                 setHasFixedSize(true)
 
                 adapter = CatAdapter(
-                    photo,
-                    getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                    photo
                 )
             }
         }
