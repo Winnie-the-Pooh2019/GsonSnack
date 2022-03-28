@@ -4,4 +4,5 @@
     <string name="download_link">https://farm${farm}.staticflickr.com/${server}/${id}_${secret}_z.jpg</string>
     <string name="link_transfer_code">picCode</string>
     <string name="toast_text">Добавлено в избранное</string>
+    <string name="scaled_image">scaled image</string>
 </resources>

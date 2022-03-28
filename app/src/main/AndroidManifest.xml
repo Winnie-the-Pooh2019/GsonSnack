@@ -10,12 +10,14 @@
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
-            android:supportsRtl="true"
-            android:theme="@style/Theme.SomeShit">
+            android:supportsRtl="true">
+<!--            android:theme="@style/Theme.SomeShit.PicViewer">-->
         <activity
+                android:theme="@style/Theme.SomeShit.PicViewer"
                 android:name=".PicViewer"
                 android:exported="true"/>
         <activity
+                android:theme="@style/Theme.SomeShit.MainActivity"
                 android:name=".MainActivity"
                 android:exported="true">
             <intent-filter>
