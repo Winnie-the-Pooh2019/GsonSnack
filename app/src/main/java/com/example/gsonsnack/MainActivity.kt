@@ -42,17 +42,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showSnack(string: String?) {
-        Snackbar.make(
-            findViewById(R.id.main_layout),
-            getString(R.string.toast_added_to_fav),
-            Snackbar.LENGTH_LONG
-        ).apply {
-            setAction("Открыть") {
-                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(string))
-                startActivity(browserIntent)
-            }
+        if (string != null) {
+            Snackbar.make(
+                findViewById(R.id.main_layout),
+                getString(R.string.toast_added_to_fav),
+                Snackbar.LENGTH_LONG
+            ).apply {
+                setAction("Открыть") {
+                    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(string))
+                    startActivity(browserIntent)
+                }
 
-            show()
+                show()
+            }
         }
     }
 
