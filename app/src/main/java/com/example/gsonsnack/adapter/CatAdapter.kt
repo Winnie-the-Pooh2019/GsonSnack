@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.gsonsnack.MainActivity
 import com.example.gsonsnack.R
 import com.example.gsonsnack.domain.objects.Photo
+import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,7 +38,7 @@ class CatAdapter(private val main: MainActivity, private val list: List<Photo>) 
             )
 
             holder.imageView.setOnClickListener {
-                main.picViewContract.launch(link)
+                main.picViewContract.launch(Gson().toJson(photo, Photo::class.java))
             }
         }
     }

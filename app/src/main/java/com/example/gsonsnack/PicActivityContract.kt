@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
+import timber.log.Timber
 
 class PicActivityContract(private val context: Context) : ActivityResultContract<String, String?>() {
     override fun createIntent(context: Context, input: String?): Intent {
@@ -15,7 +16,9 @@ class PicActivityContract(private val context: Context) : ActivityResultContract
         Activity.RESULT_OK -> {
             intent?.getStringExtra(
                 context.getString(R.string.link_transfer_code)
-            )
+            ).apply {
+                Timber.e(this.toString())
+            }
         }
         else -> null
     }
