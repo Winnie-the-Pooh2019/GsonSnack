@@ -71,7 +71,7 @@ data class Photo(
         result = 31 * result + isPublic
         result = 31 * result + isFriend
         result = 31 * result + isFamily
-        
+
         return result
     }
 }
