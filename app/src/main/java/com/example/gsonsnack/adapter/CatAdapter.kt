@@ -11,19 +11,17 @@ import com.example.gsonsnack.domain.objects.Photo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 
 class CatAdapter(private val main: MainActivity, private val list: List<Photo>) :
     RecyclerView.Adapter<CatHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatHolder {
-        Timber.e("ONCREATE VIEW HOLDER")
         return CatHolder(LayoutInflater.from(parent.context).inflate(R.layout.recycler_item, parent, false))
     }
 
+    // if u remove coroutine it wont work idk why -_-
     override fun onBindViewHolder(holder: CatHolder, position: Int) {
-        Timber.e("onBindViewHolder")
         val photo = list[position]
 
         CoroutineScope(Dispatchers.Main).launch {
@@ -34,13 +32,15 @@ class CatAdapter(private val main: MainActivity, private val list: List<Photo>) 
             Glide.with(main)
                 .asBitmap()
                 .load(link)
+                .fallback(R.mipmap.herewego)
+                .error(R.mipmap.herewego)
                 .into(holder.imageView)
             holder.imageView.layoutParams = LinearLayout.LayoutParams(
                 holder.imageView.width, holder.imageView.width
             )
 
             holder.imageView.setOnClickListener {
-                main.picViewContract.launch(link)
+                main.picViewContract.launch(Photo.Package(link, photo.id, photo.isFavourite))
             }
         }
     }

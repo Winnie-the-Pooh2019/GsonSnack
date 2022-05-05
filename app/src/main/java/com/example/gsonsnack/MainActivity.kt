@@ -3,6 +3,7 @@ package com.example.gsonsnack
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -47,36 +48,35 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showSnack(string: String?) {
-        if (string != null) {
-            Timber.e(string)
+    private fun showSnack(pack: Photo.Package?) {
+        if (pack != null) {
+            Timber.e(pack.toString())
 
-            val photo = Gson().fromJson(string, Photo::class.java)
+            val photo = photos.firstOrNull { it.id == pack.id }
             Timber.e(photo.toString())
-            val index = photos.indexOf(photo)
 
-            Timber.e(if (index != -1) photos[index].toString() else index.toString())
+            if (photo != null) {
+                photo.isFavourite = pack.isFavourite
 
-            if (index != -1)
-                photos[index].isFavourite = photo.isFavourite
+                Snackbar.make(
+                    findViewById(R.id.main_layout),
+                    if (photo.isFavourite)
+                        getString(R.string.toast_added_to_fav)
+                    else
+                        getString(R.string.toast_removed_from_fav),
+                    Snackbar.LENGTH_LONG
+                ).apply {
+                    setAction("Открыть") {
+                        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(
+                            photo.generateDownloadLink(getString(R.string.download_link))
+                        ))
+                        startActivity(browserIntent)
+                    }
 
-            Snackbar.make(
-                findViewById(R.id.main_layout),
-                if (photo.isFavourite)
-                    getString(R.string.toast_added_to_fav)
-                else
-                    getString(R.string.toast_removed_from_fav),
-                Snackbar.LENGTH_LONG
-            ).apply {
-                setAction("Открыть") {
-                    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(
-                        photo.generateDownloadLink(getString(R.string.download_link))
-                    ))
-                    startActivity(browserIntent)
+                    show()
                 }
-
-                show()
-            }
+            } else
+                Toast.makeText(applicationContext, "Photo not found",Toast.LENGTH_SHORT).show()
         }
     }
 

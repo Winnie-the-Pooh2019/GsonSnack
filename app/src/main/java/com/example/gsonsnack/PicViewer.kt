@@ -8,10 +8,18 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.gsonsnack.domain.objects.Photo
-import com.google.gson.Gson
 import timber.log.Timber
 
 class PicViewer : AppCompatActivity() {
+    private val pack: Photo.Package by lazy {
+        try {
+            intent.extras!!.getSerializable(getString(R.string.link_transfer_code)) as Photo.Package
+        } catch (npe: NullPointerException) {
+            Timber.e(npe)
+            Photo.Package()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pic_viewer)
@@ -19,7 +27,7 @@ class PicViewer : AppCompatActivity() {
 
         findViewById<ImageView>(R.id.image_details).also {
             Glide.with(this)
-                .load(intent.getStringExtra(getString(R.string.link_transfer_code)))
+                .load(pack.link)
                 .fallback(R.mipmap.herewego)
                 .error(R.mipmap.herewego)
                 .into(it)
@@ -30,7 +38,7 @@ class PicViewer : AppCompatActivity() {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
 
         menu.findItem(R.id.heart).setIcon(
-            if (photo != null && photo!!.isFavourite)
+            if (pack.isFavourite)
                 R.drawable.baseline_favorite_24
             else
                 R.drawable.baseline_favorite_border_24
@@ -40,19 +48,17 @@ class PicViewer : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (photo != null) {
-            if (photo!!.isFavourite)
-                item.setIcon(R.drawable.baseline_favorite_border_24)
-            else
-                item.setIcon(R.drawable.baseline_favorite_24)
+        if (!pack.isFavourite)
+            item.setIcon(R.drawable.baseline_favorite_border_24)
+        else
+            item.setIcon(R.drawable.baseline_favorite_24)
 
-            photo!!.isFavourite = !photo!!.isFavourite
-        }
+        pack.isFavourite = !pack.isFavourite
 
-        Timber.e(photo.toString())
+        Timber.e(pack.toString())
 
         val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra(getString(R.string.link_transfer_code), Gson().toJson(photo))
+        intent.putExtras(Bundle().apply { putSerializable(getString(R.string.link_transfer_code), pack) })
         setResult(RESULT_OK, intent)
         finish()
 
