@@ -32,15 +32,18 @@ class MainActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.Main).launch {
             photos = ArrayList(downloadJsonAsync(getString(R.string.link)).photos.photo)
 
-            findViewById<RecyclerView>(R.id.recycler_view).apply {
-                layoutManager = GridLayoutManager(context, 2)
-                setHasFixedSize(true)
+            val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
 
-                adapter = CatAdapter(
-                    this@MainActivity,
-                    photos
-                )
-            }
+            recyclerView.layoutManager = GridLayoutManager(this@MainActivity, 2)
+            recyclerView.setHasFixedSize(true)
+
+            Timber.e("PHOTOES RCHO $photos")
+            recyclerView.adapter = CatAdapter(
+                this@MainActivity,
+                photos
+            )
+
+            Timber.e("final of coroutine")
         }
     }
 
@@ -77,7 +80,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun downloadJsonAsync(link: String): Wrapper = withContext(Dispatchers.Default) {
+    private suspend fun downloadJsonAsync(link: String): Wrapper = withContext(Dispatchers.IO) {
         val connection = withContext(Dispatchers.IO) {
             URL(link).openConnection()
         } as HttpURLConnection

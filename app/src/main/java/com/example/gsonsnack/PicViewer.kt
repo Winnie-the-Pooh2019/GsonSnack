@@ -12,23 +12,14 @@ import com.google.gson.Gson
 import timber.log.Timber
 
 class PicViewer : AppCompatActivity() {
-    private var photo: Photo? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pic_viewer)
         setSupportActionBar(findViewById(R.id.details_toolbar))
 
         findViewById<ImageView>(R.id.image_details).also {
-            photo = Gson().fromJson(
-                intent.getStringExtra(getString(R.string.link_transfer_code)),
-                Photo::class.java
-            )
-
-            Timber.e(photo.toString())
-
             Glide.with(this)
-                .load(photo?.generateDownloadLink(getString(R.string.download_link)))
+                .load(intent.getStringExtra(getString(R.string.link_transfer_code)))
                 .fallback(R.mipmap.herewego)
                 .error(R.mipmap.herewego)
                 .into(it)
